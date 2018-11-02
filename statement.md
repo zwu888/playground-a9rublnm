@@ -1,19 +1,44 @@
-# Welcome!
+# Range-based for loop
 
-This C++ template lets you get started quickly with a simple one-page playground.
 
 ```C++ runnable
-#include <iostream>
-
+#include<iostream>
 using namespace std;
 
-int main() 
+template<typename T, int sizeOfArray>
+class MyCustomType
 {
-    cout << "Hello, World!";
+private:
+    T *data;
+    int indx;
+public:
+    MyCustomType(){
+        data = new T[sizeOfArray];
+        indx = -1;
+    }
+    ~MyCustomType(){
+        delete []data;
+    }
+    void addData(T newVal){
+        data[++indx] = newVal;
+    }
+
+    //write definition for begin() and end()
+    //these two method will be used for "ranged based loop idiom"
+    T* begin(){
+        return &data[0];
+    }
+    T* end(){
+        return  &data[sizeOfArray];
+    }
+};
+int main()
+{
+    MyCustomType<double, 2> numberList;
+    numberList.addData(20.25);
+    numberList.addData(50.12);
+    for(auto val: numberList){
+        cout<<val<<endl;
+    }
     return 0;
 }
-```
-
-# Advanced usage
-
-If you want a more complex example (external libraries, viewers...), use the [Advanced C++ template](https://tech.io/select-repo/598)
